@@ -65,7 +65,7 @@ const NavLg = () => {
     );
 };
 
-const MovieNavbar = () => {
+const Navbar = () => {
     return (
       <> 
        <nav className="absolute inset-x-0 z-30 bg-opacity-10 backdrop-filter backdrop-blur-lg lg:relative lg:bg-bms-700 p-4">
@@ -86,4 +86,4 @@ const MovieNavbar = () => {
    );
 };
 
-export default MovieNavbar;
+export default Navbar;

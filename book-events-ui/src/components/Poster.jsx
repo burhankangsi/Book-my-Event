@@ -2,10 +2,10 @@ import React from 'react'
 import Slider from 'react-slick';
 
 //Components
-import Poster from '../Poster/poster.components';
+import Poster from '../../../../Book my Show/src/components/Poster/poster.components';
 
 //Config
-import PosterCarousalSettings from '../../config/PosterCarousal.config';
+import PosterCarousalSettings from '../../../../Book my Show/src/config/PosterCarousal.config';
 
 const PosterSlider = (props) => {
   
