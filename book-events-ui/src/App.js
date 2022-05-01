@@ -2,8 +2,8 @@ import { Route } from "react-router-dom";
 import axios from "axios";
 
 // HOC
-import DefaultHOC from "./components/DefaultTemplate";
-import MovieHOC from "./components/HotelTemplate";
+import DefaultTemplate from "./components/DefaultTemplate";
+import VenueTemplate from "./components/HotelTemplate";
 
 // Pages
 import HomePage from "./layouts/Home";
@@ -15,16 +15,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // Axios default settings
-axios.defaults.baseURL = "https://api.themoviedb.org/3";
+//backend api link
+//xios.defaults.baseURL = "https://api.themoviedb.org/3";
+axios.defaults.baseURL = "localhost:3001";
 axios.defaults.params = {};
 axios.defaults.params["api_key"] = process.env.REACT_APP_API_KEY;
 
 function App() {
   return (
     <>
-      <DefaultHOC path="/" exact component={HomePage} />
-      <MovieHOC path="/movie/:id" excat component={Venue} />
-      <DefaultHOC path="/plays" excat component={Partys} />
+      <DefaultTemplate path="/" exact element={<HomePage/>} />
+      <VenueTemplate path="/movie/:id" exact element={<Venue/>} />
+      <DefaultTemplate path="/plays" exact element={<Partys/>} />
     </>
   );
 };

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export const VenueContext =  React.createContext();
 
 const VenueProvider = ({ children }) => {
-   const [movie, setVenue] = useState({
+   const [venue, setVenue] = useState({
        id: 0,
        original_title: "",
        overview: "",
@@ -13,7 +13,7 @@ const VenueProvider = ({ children }) => {
    });
 
    return (
-     <VenueContext.Provider value={{ movie, setVenue }}>
+     <VenueContext.Provider value={{ venue, setVenue }}>
          {children}
      </VenueContext.Provider>
    );

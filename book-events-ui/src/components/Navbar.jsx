@@ -9,17 +9,17 @@ import {GoChevronRight} from "react-icons/go";
  from "react-icons/bi";
 
  //Context
-import { MovieContext } from "../../Context/movie.context";
+import { VenueContext } from "../Context";
 
 
 const NavSm = () => {
-   const { movie } = useContext(MovieContext);
+   const { venue } = useContext(VenueContext);
    return (
     <>
       <div className="text-white flex item-center justify-between">
           <div>
               <h4 className="text-xl font-bold">
-                  {movie.original_title}
+                  {venue.original_title}
               </h4>
           </div>
           <div className="w-8 h-8">

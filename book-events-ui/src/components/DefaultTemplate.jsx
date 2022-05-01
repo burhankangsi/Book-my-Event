@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //layout
 import DefaultLayout from "../layouts/DefaultLayout";
@@ -7,6 +7,7 @@ import DefaultLayout from "../layouts/DefaultLayout";
 const DefaultTemplate = ({ component: Component, ...rest }) => {
     return (
         <>
+        <Routes>
           <Route {...rest}
            component={(props) => (
                <DefaultLayout>
@@ -14,6 +15,7 @@ const DefaultTemplate = ({ component: Component, ...rest }) => {
                </DefaultLayout>
             )} 
            />
+           </Routes>
         </>  
     );
 };
