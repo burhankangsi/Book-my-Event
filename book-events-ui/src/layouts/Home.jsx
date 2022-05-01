@@ -2,12 +2,12 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 
 //Coponents
-import EntertainmentCardSlider from "../components/Entertainment/Entertainmentcard.components";
-import Poster from "../components/Poster/poster.components";
-import PosterSlider from "../components/posterslider.components.jsx/posterslider.components";
+import EntertainmentCardSlider from "../components/EventCard";
+import Poster from "../components/Poster";
+import PosterSlider from "../components/Poster";
 
 //Config
-import TempPosters from "../config/TempPosters.config";
+import TempPosters from "../config/TempConfig";
 
 const HomePage  = () => {
 

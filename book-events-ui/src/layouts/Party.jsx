@@ -1,8 +1,8 @@
 import React from 'react'
 
 //Component
-import Poster from '../components/Poster/poster.components';
-import PartyFilters from '../components/PartyFilters/PartyFilters.components';
+import Poster from '../components/Poster';
+import PartyFilters from '../components/PartyFilter';
 
 const Party = () => {
     return (

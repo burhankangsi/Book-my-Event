@@ -1,12 +1,13 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //layout
-import VenueLayout from "../layouts/Venuelayout";
+import VenueLayout from "../layouts/VenueLayout";
 
 const VenueTemplate = ({ component: Component, ...rest }) => {
     return (
         <>
+        <Routes>
           <Route {...rest}
            component={(props) => (
                <VenueLayout>
@@ -14,6 +15,7 @@ const VenueTemplate = ({ component: Component, ...rest }) => {
                </VenueLayout>
             )} 
            />
+        </Routes>
         </>  
     );
 };

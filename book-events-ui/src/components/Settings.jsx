@@ -3,7 +3,7 @@ import HeroSlider from "react-slick";
 import axios from "axios";
 
 // Components
-import { NextArrow, PrevArrow } from "./Arrows.components";
+import { NextArrow, PrevArrow } from "./Arrow";
 
 import { BiImages } from "react-icons/bi";
 
