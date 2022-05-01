@@ -4,42 +4,42 @@ import React, {useState, useEffect} from "react";
 //Coponents
 import EntertainmentCardSlider from "../components/Entertainment/Entertainmentcard.components";
 import Poster from "../components/Poster/poster.components";
-import PosterSlider from "../components/PosterSlider.components.jsx/posterslider.components";
+import PosterSlider from "../components/posterslider.components.jsx/posterslider.components";
 
 //Config
 import TempPosters from "../config/TempPosters.config";
 
 const HomePage  = () => {
 
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [popularVenues, setPopularVenues] = useState([]);
+  const [topRatedVenues, setTopRatedVenues] = useState([]);
+  const [upcomingVenues, setUpcomingVenues] = useState([]);
        
     useEffect(() => {
-      const requestPopularMovies = async () => {
-        const getPopularMovies = await axios.get("/movie/popular");
-        setPopularMovies(getPopularMovies.data.results);
+      const requestPopularVenues = async () => {
+        const getPopularVenues = await axios.get("/movie/popular");
+        setPopularVenues(getPopularVenues.data.results);
       };
 
-      requestPopularMovies();
+      requestPopularVenues();
     }, []);
 
     useEffect(() => {
-      const requestTopRatedMovies = async () => {
-        const getTopRatedMovies = await axios.get("/movie/top_rated");
-        setTopRatedMovies(getTopRatedMovies.data.results);
+      const requestTopRatedVenues = async () => {
+        const getTopRatedVenues = await axios.get("/movie/top_rated");
+        setTopRatedVenues(getTopRatedVenues.data.results);
       };
 
-      requestTopRatedMovies();
+      requestTopRatedVenues();
     }, []);
 
     useEffect(() => {
-      const requestUpcomingMovies = async () => {
-        const getUpcomingMovies = await axios.get("/movie/upcoming");
-        setUpcomingMovies(getUpcomingMovies.data.results);
+      const requestUpcomingVenues = async () => {
+        const getUpcomingVenues = await axios.get("/movie/upcoming");
+        setUpcomingVenues(getUpcomingVenues.data.results);
       };
 
-      requestUpcomingMovies();
+      requestUpcomingVenues();
     }, []);
 
     return (
@@ -61,7 +61,7 @@ const HomePage  = () => {
                        />
                 </div>
                 < PosterSlider 
-                   images={popularMovies} 
+                   images={popularVenues} 
                    title="Premieres" 
                    subtitle="Brand new releases every friday"
                    isDark
@@ -71,14 +71,14 @@ const HomePage  = () => {
         </div>
         <div className="container mx-auto px-4 my-8">
         < PosterSlider 
-            images={topRatedMovies} 
+            images={topRatedVenues} 
             title="Online Streaming events" 
             isDark={false}
         />
         </div>
         <div className="container mx-auto px-4 my-8">
         < PosterSlider 
-            images={upcomingMovies} 
+            images={upcomingVenues} 
             title="Outdoor events" 
             isDark={false}
         />
