@@ -2,13 +2,13 @@ import { Route } from "react-router-dom";
 import axios from "axios";
 
 // HOC
-import DefaultHOC from "./HOC/Default.HOC";
-import MovieHOC from "./HOC/Movie.HOC";
+import DefaultHOC from "./components/DefaultTemplate";
+import MovieHOC from "./components/HotelTemplate";
 
 // Pages
-import HomePage from "./pages/Home.page";
-import Movie from "./pages/Movie.pages";
-import Plays from "./pages/Plays.page";
+import HomePage from "./layouts/Home";
+import Venue from "./layouts/Venue";
+import Partys from "./layouts/Party";
 
 // Import css files
 import "slick-carousel/slick/slick.css";
@@ -23,8 +23,8 @@ function App() {
   return (
     <>
       <DefaultHOC path="/" exact component={HomePage} />
-      <MovieHOC path="/movie/:id" excat component={Movie} />
-      <DefaultHOC path="/plays" excat component={Plays} />
+      <MovieHOC path="/movie/:id" excat component={Venue} />
+      <DefaultHOC path="/plays" excat component={Partys} />
     </>
   );
 };

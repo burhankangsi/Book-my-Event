@@ -1,10 +1,10 @@
 import React, { useState } from "react";
  
 
-export const MovieContext =  React.createContext();
+export const VenueContext =  React.createContext();
 
-const MovieProvider = ({ children }) => {
-   const [movie, setMovie] = useState({
+const VenueProvider = ({ children }) => {
+   const [movie, setVenue] = useState({
        id: 0,
        original_title: "",
        overview: "",
@@ -13,10 +13,10 @@ const MovieProvider = ({ children }) => {
    });
 
    return (
-     <MovieContext.Provider value={{ movie, setMovie }}>
+     <VenueContext.Provider value={{ movie, setVenue }}>
          {children}
-     </MovieContext.Provider>
+     </VenueContext.Provider>
    );
 };
 
-export default MovieProvider;
+export default VenueProvider;
