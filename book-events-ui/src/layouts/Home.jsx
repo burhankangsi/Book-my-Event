@@ -17,7 +17,7 @@ const HomePage  = () => {
        
     useEffect(() => {
       const requestPopularVenues = async () => {
-        const getPopularVenues = await axios.get("/movie/popular");
+        const getPopularVenues = await axios.get("/event/popular");
         setPopularVenues(getPopularVenues.data.results);
       };
 
@@ -26,7 +26,7 @@ const HomePage  = () => {
 
     useEffect(() => {
       const requestTopRatedVenues = async () => {
-        const getTopRatedVenues = await axios.get("/movie/top_rated");
+        const getTopRatedVenues = await axios.get("/event/top_rated");
         setTopRatedVenues(getTopRatedVenues.data.results);
       };
 
@@ -35,7 +35,7 @@ const HomePage  = () => {
 
     useEffect(() => {
       const requestUpcomingVenues = async () => {
-        const getUpcomingVenues = await axios.get("/movie/upcoming");
+        const getUpcomingVenues = await axios.get("/event/upcoming");
         setUpcomingVenues(getUpcomingVenues.data.results);
       };
 

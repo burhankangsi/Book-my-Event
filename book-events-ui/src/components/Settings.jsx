@@ -13,7 +13,7 @@ const HeroCarousal = () => {
 
   useEffect (() => {
     const requestNowPlayingMovies = async () => {
-      const getImages = await axios.get("/movie/now_playing");
+      const getImages = await axios.get("/event/now_playing");
       setImages(getImages.data.results);
     };
 

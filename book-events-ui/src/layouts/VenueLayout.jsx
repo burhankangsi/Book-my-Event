@@ -14,7 +14,7 @@ import { VenueContext } from '../Context';
 
   useEffect(() => {
     const requestVenue = async () => {
-       const getVenueData = await axios.get(`/movie/${id}`);
+       const getVenueData = await axios.get(`/event/${id}`);
        setVenue(getVenueData.data);
     };
     requestVenue();

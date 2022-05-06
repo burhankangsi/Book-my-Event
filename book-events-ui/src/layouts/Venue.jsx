@@ -24,7 +24,7 @@ const Venue = () => {
    
   useEffect(() => {
     const requestCast = async () => {
-      const getCast = await axios.get(`movie/${id}/credits`);
+      const getCast = await axios.get(`event/${id}/credits`);
       setCast(getCast.data.cast);
     };
     requestCast();
@@ -32,7 +32,7 @@ const Venue = () => {
 
   useEffect(() => {
     const requestSimilarVenues = async () => {
-      const getSimilarVenues = await axios.get(`/movie/${id}/similar`);
+      const getSimilarVenues = await axios.get(`/event/${id}/similar`);
       setSimilarVenues(getSimilarVenues.data.results);
     };
 
@@ -41,7 +41,7 @@ const Venue = () => {
 
   useEffect(() => {
     const requestRecommendedVenues = async () => {
-      const getRecommendedVenues = await axios.get(`/movie/${id}/recommendations`);
+      const getRecommendedVenues = await axios.get(`/event/${id}/recommendations`);
       setRecommended(getRecommendedVenues.data.results);
     };
 

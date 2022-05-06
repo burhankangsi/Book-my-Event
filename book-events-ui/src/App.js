@@ -17,7 +17,7 @@ import "slick-carousel/slick/slick-theme.css";
 // Axios default settings
 //backend api link
 //xios.defaults.baseURL = "https://api.themoviedb.org/3";
-axios.defaults.baseURL = "localhost:3001";
+axios.defaults.baseURL = "localhost:8000";
 axios.defaults.params = {};
 axios.defaults.params["api_key"] = process.env.REACT_APP_API_KEY;
 
@@ -25,7 +25,7 @@ function App() {
   return (
     <>
       <DefaultTemplate path="/" exact element={<HomePage/>} />
-      <VenueTemplate path="/movie/:id" exact element={<Venue/>} />
+      <VenueTemplate path="/event/:id" exact element={<Venue/>} />
       <DefaultTemplate path="/plays" exact element={<Partys/>} />
     </>
   );
