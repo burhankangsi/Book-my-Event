@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	"reflect"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -127,42 +129,34 @@ func GetEvent(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		log.Errorf("Event ID is missing in parameters")
 	}
+	log.Infof("eventId is %v", eventId)
 	client, ctx, cancel, err := ConnectDatabase()
 	if err != nil {
 		panic(err)
 	}
-	// filter := bson.D{
-	// 	{"$and",
-	// 		bson.A{
-	// 			bson.D{
-	// 				{"eventId", bson.D{{"$gt", 480}}},
-	// 			},
-	// 		},
-	// 	},
-	// }
 
-	filter := bson.D{{"eventId", eventId}}
+	col := client.Database("book_my_event").Collection("events")
+	fmt.Println("Collection type:", reflect.TypeOf(col), "\n")
 
-	var res bson.M
-	eventCollection := client.Database("book_my_event").Collection("events")
-	err = eventCollection.FindOne(context.TODO(), filter).Decode(&res)
+	var result Event
+	err = col.FindOne(context.TODO(), bson.D{}).Decode(&result)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error calling FindOne():", err)
+		os.Exit(1)
+	} else {
+		fmt.Println("FindOne() result:", result)
+		fmt.Println("FindOne() eventId:", result.EventID)
+		fmt.Println("FindOne() name:", result.EventName)
+		fmt.Println("FindOne() venue:", result.Venue)
+		fmt.Println("FindOne() bookingdate:", result.BookingDate)
+		fmt.Println("FindOne() duration:", result.Duration)
+		fmt.Println("FindOne() starttime:", result.StartTime)
+		fmt.Println("FindOne() endTime:", result.EndTime)
+		fmt.Println("FindOne() price:", result.Price)
+		fmt.Println("FindOne() bookedby:", result.BookedBy)
 	}
-
-	// var events []Event
-	// for _, value := range res {
-	// 	//doubtful line. Test it once
-	// 	events = append(events, Event{EventID: eventID, EventName: name, Venue: venue,
-	// 		BookingDate: bookingDate, Duration: eventDuration, StartTime: startTime, EndTime: endTime, Price: cost, BookedBy: bookedby})
-	// }
 	close(client, ctx, cancel)
-	var s Event
-
-	// convert m to s
-	bsonBytes, _ := bson.Marshal(res)
-	bson.Unmarshal(bsonBytes, &s)
-	var response = JsonResponse1{Type: "success", Data: s}
+	var response = JsonResponse1{Type: "success", Data: result}
 
 	json.NewEncoder(w).Encode(response)
 }
@@ -170,45 +164,51 @@ func GetEvent(w http.ResponseWriter, r *http.Request) {
 func GetEventPopular(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	// params := mux.Vars(r)
-	// eventId, ok := params["eventId"]
-	// if !ok {
-	// 	log.Errorf("Event ID is missing in parameters")
-	// }
 	client, ctx, cancel, err := ConnectDatabase()
 	if err != nil {
-		log.Info("Error in connecting")
 		panic(err)
 	}
 
-	//filter := bson.D{{"eventId", eventId}}
-	//filter := bson.D{}
-
-	var res bson.D
+	var res []bson.M
 	eventCollection := client.Database("book_my_event").Collection("events")
-	cur, currErr := eventCollection.Find(ctx, bson.D{})
+	cur, currErr := eventCollection.Find(ctx, bson.M{})
 
 	if currErr != nil {
-		log.Info("Error in finding document")
 		panic(currErr)
+	} else {
+		for cur.Next(ctx) {
+
+			// declare a result BSON object
+			var result bson.M
+			err := cur.Decode(&result)
+
+			// If there is a cursor.Decode error
+			if err != nil {
+				fmt.Println("cursor.Next() error:", err)
+				os.Exit(1)
+
+				// If there are no cursor.Decode errors
+			} else {
+				fmt.Println("\nresult type:", reflect.TypeOf(result))
+				fmt.Println("result:", result)
+				res = append(res, result)
+			}
+		}
 	}
 	defer cur.Close(ctx)
 
 	var posts []Event
-	if err = cur.All(ctx, &posts); err != nil {
-		log.Info("Error in assigning")
-		panic(err)
-	}
-	fmt.Println(posts)
+	// if err = cur.All(ctx, &res); err != nil {
+	// 	panic(err)
+	// }
+	fmt.Println(res)
 
 	close(client, ctx, cancel)
-	//var s Event
 
-	// convert m to s
 	bsonBytes, _ := bson.Marshal(res)
 	bson.Unmarshal(bsonBytes, &posts)
 	var response = JsonResponse{Type: "success", Data: posts}
-
+	log.Infof("response is %v", response)
 	json.NewEncoder(w).Encode(response)
 }
 
@@ -224,12 +224,11 @@ func initServer() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	log.Infof("Calling handler")
 	myRouter.HandleFunc("/addEvent", AddEvent).Methods("POST")
-	//myRouter.HandleFunc("/addUser", AddUser).Methods("POST")
-	myRouter.HandleFunc("/event/{eventId}", GetEvent).Methods("GET")
-	myRouter.HandleFunc("/event/top_rated", GetEventPopular).Methods("GET")
-	myRouter.HandleFunc("/event/upcoming", GetEvent).Methods("GET")
-	myRouter.HandleFunc("/event/recommended", GetEvent).Methods("GET")
-	myRouter.HandleFunc("/event/popular", GetEvent).Methods("GET")
+	myRouter.HandleFunc("/event/{eventId}", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/top_rated", GetEvent).Methods("GET")
+	myRouter.HandleFunc("/event/upcoming", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/event/recommended", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/event/popular", GetEventPopular).Methods("GET")
 	//myRouter.HandleFunc("/user", GetUserInfo).Methods("GET")
 	myRouter.HandleFunc("/", HomePage).Methods("GET")
 
