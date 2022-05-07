@@ -168,8 +168,8 @@ func GetEventPopular(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-
-	var res []bson.M
+	var count int
+	var res []Event
 	eventCollection := client.Database("book_my_event").Collection("events")
 	cur, currErr := eventCollection.Find(ctx, bson.M{})
 
@@ -179,7 +179,7 @@ func GetEventPopular(w http.ResponseWriter, r *http.Request) {
 		for cur.Next(ctx) {
 
 			// declare a result BSON object
-			var result bson.M
+			var result Event
 			err := cur.Decode(&result)
 
 			// If there is a cursor.Decode error
@@ -192,22 +192,18 @@ func GetEventPopular(w http.ResponseWriter, r *http.Request) {
 				fmt.Println("\nresult type:", reflect.TypeOf(result))
 				fmt.Println("result:", result)
 				res = append(res, result)
+				count++
 			}
 		}
 	}
 	defer cur.Close(ctx)
 
-	var posts []Event
-	// if err = cur.All(ctx, &res); err != nil {
-	// 	panic(err)
-	// }
-	fmt.Println(res)
+	//fmt.Println(res)
 
 	close(client, ctx, cancel)
 
-	bsonBytes, _ := bson.Marshal(res)
-	bson.Unmarshal(bsonBytes, &posts)
-	var response = JsonResponse{Type: "success", Data: posts}
+	log.Infof("events are %v", res)
+	var response = JsonResponse{Type: "success", Data: res}
 	log.Infof("response is %v", response)
 	json.NewEncoder(w).Encode(response)
 }
@@ -224,9 +220,9 @@ func initServer() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	log.Infof("Calling handler")
 	myRouter.HandleFunc("/addEvent", AddEvent).Methods("POST")
-	myRouter.HandleFunc("/event/{eventId}", GetEventPopular).Methods("GET")
-	myRouter.HandleFunc("/top_rated", GetEvent).Methods("GET")
-	myRouter.HandleFunc("/event/upcoming", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/event/{eventId}", GetEvent).Methods("GET")
+	myRouter.HandleFunc("/top_rated", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/upcoming", GetEventPopular).Methods("GET")
 	myRouter.HandleFunc("/event/recommended", GetEventPopular).Methods("GET")
 	myRouter.HandleFunc("/event/popular", GetEventPopular).Methods("GET")
 	//myRouter.HandleFunc("/user", GetUserInfo).Methods("GET")
