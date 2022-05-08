@@ -7,7 +7,7 @@ const Poster = (props) => {
         <div className="flex flex-col items-start gap-2 px-1 md:px-3">
             <div className="h-40 md:h-80">
                 <img 
-                  src={`https://image.tmdb.org/t/p/original${props.poster_path}`} 
+                  src={`https://www.learntek.org/wp-content/uploads/2017/09/UI-DEVeloper-1.jpg`} 
                   alt={props.original_title} className="w-full h-full rounded-md" 
                 />
             </div>

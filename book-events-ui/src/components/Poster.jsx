@@ -8,7 +8,9 @@ import Poster from './PosterComponents';
 import PosterCarousalSettings from '../config/PosterConfig';
 
 const PosterSlider = (props) => {
-  
+  console.log("Images is");
+  console.log(props.images);
+  console.log(props.title);
   const sliderConfig = props.config ? props.config : PosterCarousalSettings;
     return (
         <>
@@ -23,8 +25,8 @@ const PosterSlider = (props) => {
               </p>
             </div>
             <Slider { ...sliderConfig }>
-              {props.images.map((image) => 
-                <Poster {...image} isDark={props.isDark} /> 
+              {props.images.map((image) =>
+                  <Poster {...image} isDark={props.isDark} />
               )}
             </Slider>  
         </>

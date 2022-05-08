@@ -17,9 +17,9 @@ import "slick-carousel/slick/slick-theme.css";
 // Axios default settings
 //backend api link
 //xios.defaults.baseURL = "https://api.themoviedb.org/3";
-axios.defaults.baseURL = "localhost:8000";
+axios.defaults.baseURL = "http://localhost:8001";
 axios.defaults.params = {};
-axios.defaults.params["api_key"] = process.env.REACT_APP_API_KEY;
+axios.defaults.params["api_"] = process.env.REACT_APP_API_KEY;
 
 function App() {
   return (
