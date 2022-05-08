@@ -123,6 +123,7 @@ func ConnectDatabase() (*mongo.Client, context.Context, context.CancelFunc, erro
 
 func GetEvent(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	params := mux.Vars(r)
 	eventId, ok := params["eventId"]
@@ -163,6 +164,7 @@ func GetEvent(w http.ResponseWriter, r *http.Request) {
 
 func GetEventPopular(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	client, ctx, cancel, err := ConnectDatabase()
 	if err != nil {
@@ -223,12 +225,13 @@ func initServer() {
 	myRouter.HandleFunc("/event/{eventId}", GetEvent).Methods("GET")
 	myRouter.HandleFunc("/top_rated", GetEventPopular).Methods("GET")
 	myRouter.HandleFunc("/upcoming", GetEventPopular).Methods("GET")
-	myRouter.HandleFunc("/event/recommended", GetEventPopular).Methods("GET")
-	myRouter.HandleFunc("/event/popular", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/recommended", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/popular", GetEventPopular).Methods("GET")
+	myRouter.HandleFunc("/similar", GetEventPopular).Methods("GET")
 	//myRouter.HandleFunc("/user", GetUserInfo).Methods("GET")
-	myRouter.HandleFunc("/", HomePage).Methods("GET")
+	//myRouter.HandleFunc("/", HomePage).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8000", myRouter))
+	log.Fatal(http.ListenAndServe(":8001", myRouter))
 	log.Info("Server started")
 
 	//<-ctx.Done()

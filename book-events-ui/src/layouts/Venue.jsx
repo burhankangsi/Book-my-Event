@@ -32,8 +32,10 @@ const Venue = () => {
 
   useEffect(() => {
     const requestSimilarVenues = async () => {
-      const getSimilarVenues = await axios.get(`/event/${id}/similar`);
-      setSimilarVenues(getSimilarVenues.data.results);
+      console.log("Calling similar endpoint");
+      const getSimilarVenues = await axios.get(`/similar`);
+      setSimilarVenues(getSimilarVenues.data);
+      console.log(getSimilarVenues.data);
     };
 
     requestSimilarVenues();
@@ -41,8 +43,10 @@ const Venue = () => {
 
   useEffect(() => {
     const requestRecommendedVenues = async () => {
-      const getRecommendedVenues = await axios.get(`/event/${id}/recommendations`);
-      setRecommended(getRecommendedVenues.data.results);
+      console.log("Calling recommended endpoint");
+      const getRecommendedVenues = await axios.get(`/recommended`);
+      setRecommended(getRecommendedVenues.data);
+      console.log(getRecommendedVenues.data);
     };
 
     requestRecommendedVenues();

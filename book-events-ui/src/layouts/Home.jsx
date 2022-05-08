@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 
 //Coponents
 import EntertainmentCardSlider from "../components/EventCard";
-import Poster from "../components/Poster";
+import Poster from "../components/PosterComponents";
 import PosterSlider from "../components/Poster";
 
 //Config
@@ -14,33 +14,41 @@ const HomePage  = () => {
   const [popularVenues, setPopularVenues] = useState([]);
   const [topRatedVenues, setTopRatedVenues] = useState([]);
   const [upcomingVenues, setUpcomingVenues] = useState([]);
-       
+
     useEffect(() => {
       const requestPopularVenues = async () => {
-        const getPopularVenues = await axios.get("/event/popular");
-        setPopularVenues(getPopularVenues.data.results);
+        console.log("Calling popular endpoint");
+        const getPopularVenues = await axios.get("/popular");
+        setPopularVenues([...popularVenues, getPopularVenues.data]);
+        console.log("got popular api response");
+        console.log(getPopularVenues.data);
       };
-
       requestPopularVenues();
-    }, []);
+    }, [popularVenues]);
 
     useEffect(() => {
       const requestTopRatedVenues = async () => {
-        const getTopRatedVenues = await axios.get("/event/top_rated");
-        setTopRatedVenues(getTopRatedVenues.data.results);
+        console.log("Calling top rated endpoint");
+        const getTopRatedVenues = await axios.get("/top_rated");
+        setTopRatedVenues([...topRatedVenues, getTopRatedVenues.data]);
+        console.log("got top rated api response");
+        console.log(getTopRatedVenues.data);
       };
 
       requestTopRatedVenues();
-    }, []);
+    }, [topRatedVenues]);
 
     useEffect(() => {
       const requestUpcomingVenues = async () => {
-        const getUpcomingVenues = await axios.get("/event/upcoming");
-        setUpcomingVenues(getUpcomingVenues.data.results);
+        console.log("Calling upcoming endpoint");
+        const getUpcomingVenues = await axios.get("/upcoming");
+        setUpcomingVenues([...upcomingVenues, getUpcomingVenues.data]);
+        console.log("got upcoming api response");
+        console.log(getUpcomingVenues.data);
       };
 
       requestUpcomingVenues();
-    }, []);
+    }, [upcomingVenues]);
 
     return (
       <>
